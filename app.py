@@ -166,7 +166,7 @@ tab1, tab2, tab3, tab4, tab5 = st.tabs([
     "📈 Momentum & Progresión",
     "🎯 Perfil Táctico & Radar",
     "📋 Historial de Partidos",
-    "🤖 Sincronización Automática con Agente"
+    "🤖 Control de Datos & Auditoría"
 ])
 
 # =====================================================================
