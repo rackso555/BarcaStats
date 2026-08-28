@@ -20,8 +20,19 @@ MATCHES_2026_2027 = [
         "is_barca_home": True,
         "opponent": "Athletic Club",
         "venue": "Spotify Camp Nou",
-        "status": "SCHEDULED",
-        "notes": "Jornada 1 en Spotify Camp Nou"
+        "referee": "Alejandro Hernández Hernández",
+        "status": "FINISHED",
+        "barca_score": 2,
+        "opp_score": 0,
+        "notes": "Victoria 2-0 vs Athletic Club en el Spotify Camp Nou. Goles de Raphinha (37') y Fermín López (82'). Gran dominio del juego (70% posesión, xG 3.90 vs 0.25) y debut oficial de Rodri.",
+        "stats": {
+            "barca_xg": 3.90, "opp_xg": 0.25, "barca_possession": 70.0, "opp_possession": 30.0,
+            "barca_shots": 22, "opp_shots": 5, "barca_shots_on_target": 10, "opp_shots_on_target": 0,
+            "barca_corners": 12, "opp_corners": 5, "barca_fouls": 8, "opp_fouls": 13,
+            "barca_yellow_cards": 1, "opp_yellow_cards": 3, "barca_red_cards": 0, "opp_red_cards": 0,
+            "barca_offsides": 8, "opp_offsides": 5, "barca_pass_acc": 91.0, "opp_pass_acc": 76.0,
+            "barca_saves": 0, "opp_saves": 8, "barca_big_chances": 6, "opp_big_chances": 0
+        }
     },
     {
         "id": "2627_LALIGA_J02",
@@ -36,7 +47,19 @@ MATCHES_2026_2027 = [
         "is_barca_home": False,
         "opponent": "Elche CF",
         "venue": "Martínez Valero",
-        "status": "SCHEDULED"
+        "referee": "Guillermo Cuadra Fernández",
+        "status": "FINISHED",
+        "barca_score": 5,
+        "opp_score": 0,
+        "notes": "Contundente goleada 0-5 a domicilio en el Martínez Valero. Doblete de Raphinha (14' pen, 67'), tanto de Karim Adeyemi (45+3') y doblete de Fermín López (71', 79').",
+        "stats": {
+            "barca_xg": 3.25, "opp_xg": 0.65, "barca_possession": 56.0, "opp_possession": 44.0,
+            "barca_shots": 16, "opp_shots": 6, "barca_shots_on_target": 8, "opp_shots_on_target": 1,
+            "barca_corners": 7, "opp_corners": 3, "barca_fouls": 10, "opp_fouls": 14,
+            "barca_yellow_cards": 1, "opp_yellow_cards": 2, "barca_red_cards": 0, "opp_red_cards": 0,
+            "barca_offsides": 3, "opp_offsides": 2, "barca_pass_acc": 89.0, "opp_pass_acc": 80.0,
+            "barca_saves": 1, "opp_saves": 3, "barca_big_chances": 5, "opp_big_chances": 0
+        }
     },
     {
         "id": "2627_LALIGA_J03",
@@ -583,21 +606,22 @@ MATCHES_2026_2027 = [
         "status": "SCHEDULED"
     },
 
-    # ==================== CHAMPIONS LEAGUE 2026/2027 ====================
+    # ==================== CHAMPIONS LEAGUE 2026/2027 (SORTEO OFICIAL) ====================
     {
         "id": "2627_UCL_J01",
         "season": "2026-27",
         "competition": "Champions League",
         "matchday": 1,
         "stage": "Fase Liga - J1",
-        "date": "2026-09-09",
+        "date": "2026-09-16",
         "time": "21:00",
         "home_team": "FC Barcelona",
-        "away_team": "Bayern Munich",
+        "away_team": "Manchester City",
         "is_barca_home": True,
-        "opponent": "Bayern Munich",
+        "opponent": "Manchester City",
         "venue": "Spotify Camp Nou",
-        "status": "SCHEDULED"
+        "status": "SCHEDULED",
+        "notes": "Fase de Liga UCL - Jornada 1 vs Manchester City en Spotify Camp Nou"
     },
     {
         "id": "2627_UCL_J02",
@@ -605,14 +629,15 @@ MATCHES_2026_2027 = [
         "competition": "Champions League",
         "matchday": 2,
         "stage": "Fase Liga - J2",
-        "date": "2026-10-14",
+        "date": "2026-09-30",
         "time": "21:00",
-        "home_team": "AS Monaco",
+        "home_team": "Paris Saint-Germain",
         "away_team": "FC Barcelona",
         "is_barca_home": False,
-        "opponent": "AS Monaco",
-        "venue": "Stade Louis II",
-        "status": "SCHEDULED"
+        "opponent": "Paris Saint-Germain",
+        "venue": "Parc des Princes",
+        "status": "SCHEDULED",
+        "notes": "Fase de Liga UCL - Jornada 2 vs PSG en París"
     },
     {
         "id": "2627_UCL_J03",
@@ -623,11 +648,12 @@ MATCHES_2026_2027 = [
         "date": "2026-10-21",
         "time": "21:00",
         "home_team": "FC Barcelona",
-        "away_team": "SL Benfica",
+        "away_team": "Aston Villa",
         "is_barca_home": True,
-        "opponent": "SL Benfica",
+        "opponent": "Aston Villa",
         "venue": "Spotify Camp Nou",
-        "status": "SCHEDULED"
+        "status": "SCHEDULED",
+        "notes": "Fase de Liga UCL - Jornada 3 vs Aston Villa en Spotify Camp Nou"
     },
     {
         "id": "2627_UCL_J04",
@@ -637,12 +663,13 @@ MATCHES_2026_2027 = [
         "stage": "Fase Liga - J4",
         "date": "2026-11-04",
         "time": "21:00",
-        "home_team": "Borussia Dortmund",
+        "home_team": "Sporting CP",
         "away_team": "FC Barcelona",
         "is_barca_home": False,
-        "opponent": "Borussia Dortmund",
-        "venue": "Signal Iduna Park",
-        "status": "SCHEDULED"
+        "opponent": "Sporting CP",
+        "venue": "Estádio José Alvalade",
+        "status": "SCHEDULED",
+        "notes": "Fase de Liga UCL - Jornada 4 vs Sporting CP en Lisboa"
     },
     {
         "id": "2627_UCL_J05",
@@ -653,11 +680,12 @@ MATCHES_2026_2027 = [
         "date": "2026-11-25",
         "time": "21:00",
         "home_team": "FC Barcelona",
-        "away_team": "Atalanta BC",
+        "away_team": "Feyenoord",
         "is_barca_home": True,
-        "opponent": "Atalanta BC",
+        "opponent": "Feyenoord",
         "venue": "Spotify Camp Nou",
-        "status": "SCHEDULED"
+        "status": "SCHEDULED",
+        "notes": "Fase de Liga UCL - Jornada 5 vs Feyenoord en Spotify Camp Nou"
     },
     {
         "id": "2627_UCL_J06",
@@ -667,12 +695,13 @@ MATCHES_2026_2027 = [
         "stage": "Fase Liga - J6",
         "date": "2026-12-09",
         "time": "21:00",
-        "home_team": "Stade Brestois",
+        "home_team": "Galatasaray",
         "away_team": "FC Barcelona",
         "is_barca_home": False,
-        "opponent": "Stade Brestois",
-        "venue": "Stade Francis-Le Blé",
-        "status": "SCHEDULED"
+        "opponent": "Galatasaray",
+        "venue": "Rams Park",
+        "status": "SCHEDULED",
+        "notes": "Fase de Liga UCL - Jornada 6 vs Galatasaray en Estambul"
     },
     {
         "id": "2627_UCL_J07",
@@ -683,11 +712,12 @@ MATCHES_2026_2027 = [
         "date": "2027-01-20",
         "time": "21:00",
         "home_team": "FC Barcelona",
-        "away_team": "BSC Young Boys",
+        "away_team": "Como 1907",
         "is_barca_home": True,
-        "opponent": "BSC Young Boys",
+        "opponent": "Como 1907",
         "venue": "Spotify Camp Nou",
-        "status": "SCHEDULED"
+        "status": "SCHEDULED",
+        "notes": "Fase de Liga UCL - Jornada 7 vs Como 1907 en Spotify Camp Nou"
     },
     {
         "id": "2627_UCL_J08",
@@ -697,12 +727,13 @@ MATCHES_2026_2027 = [
         "stage": "Fase Liga - J8",
         "date": "2027-01-27",
         "time": "21:00",
-        "home_team": "Crvena Zvezda",
+        "home_team": "Sabah",
         "away_team": "FC Barcelona",
         "is_barca_home": False,
-        "opponent": "Crvena Zvezda",
-        "venue": "Rajko Mitić Stadium",
-        "status": "SCHEDULED"
+        "opponent": "Sabah",
+        "venue": "Bank Respublika Arena",
+        "status": "SCHEDULED",
+        "notes": "Fase de Liga UCL - Jornada 8 vs Sabah en Bakú"
     },
 
     # ==================== SUPERCOPA 2027 ====================
