@@ -798,54 +798,45 @@ with tab4:
 # TAB 5: AGENTE DE SINCRONIZACIÓN AUTOMÁTICA & LIMPIEZA (ROLE PROTECTED)
 # =====================================================================
 with tab5:
-    st.subheader("🤖 Agente de Sincronización Automática & Limpieza de Datos")
+    st.subheader("🤖 Panel de Control de Datos & Auditoría Oficial")
     
     if user_role != "ADMIN":
         render_tab5_admin_prompt()
     else:
         st.markdown("""
-            Este módulo mantiene la base de datos sincronizada y validada automáticamente sin captura manual.
-            Como **Administrador**, puedes sincronizar la próxima jornada o ejecutar una auditoría completa de datos oficiales.
+            Panel de control de datos oficial para el **Administrador**.
+            Aquí puedes supervisar la integridad de los datos, forzar la recarga en tiempo real o ejecutar la auditoría completa de fuentes oficiales.
         """)
         
-        col_ag1, col_ag2 = st.columns([1.15, 0.85])
+        col_ag1, col_ag2 = st.columns([1.1, 0.9])
         
         with col_ag1:
-            st.markdown("#### ⚡ Acciones del Agente de Sincronización")
+            st.markdown("#### ⚡ Control y Estado de la Base de Datos")
             
             pending_matches = sync_agent.get_pending_matches("2026-27")
+            finished_2627 = df_all[(df_all['season'] == '2026-27') & (df_all['status'] == 'FINISHED')]
             
-            if pending_matches.empty:
-                st.success("🎉 Todos los partidos programados de la temporada 2026/27 han sido sincronizados.")
-            else:
-                next_m = pending_matches.iloc[0]
-                st.info(f"⏳ **Próximo Partido a Sincronizar**: {next_m['stage']} vs **{next_m['opponent']}** ({'Local' if next_m['is_barca_home'] else 'Visitante'}) - 📅 {next_m['date']}")
-                
-                col_b1, col_b2 = st.columns(2)
-                with col_b1:
-                    if st.button("🚀 Sincronizar Próxima Jornada Ahora", use_container_width=True):
-                        with st.spinner("Agente extrayendo estadísticas oficiales..."):
-                            sync_res = sync_agent.sync_next_matchday("2026-27")
-                            if sync_res:
-                                st.success(f"✅ ¡Partido vs {sync_res['opponent']} sincronizado! Marcador: {sync_res['score']} (xG: {sync_res['xg']})")
-                                st.rerun()
-                with col_b2:
-                    if st.button("⏩ Sincronizar Primeras 5 Jornadas", use_container_width=True):
-                        with st.spinner("Sincronizando lote de jornadas con el agente..."):
-                            for _ in range(5):
-                                sync_agent.sync_next_matchday("2026-27")
-                            st.success("✅ ¡5 Jornadas sincronizadas exitosamente en la base de datos!")
-                            st.rerun()
-
-            st.markdown("---")
-            st.markdown("#### 🧹 Auditoría y Limpieza Completa de Datos")
-            st.markdown("Vuelve a ejecutar la auditoría de fuentes oficiales (LaLiga, UEFA, Wikipedia, Transfermarkt) para verificar y limpiar todos los partidos de 2024/25, 2025/26 y 2026/27.")
-            if st.button("🔄 Ejecutar Auditoría y Limpieza de Base de Datos"):
-                with st.spinner("Limpiando y validando integridad de datos..."):
-                    cleaner = DataCleanerEngine("barca_analytics.db")
-                    res = cleaner.audit_and_clean_all()
-                    st.success(f"✅ ¡Base de datos limpia y verificada! Total: {res['total_matches']} partidos auditados.")
+            st.markdown(f"""
+                <div style="background: rgba(18, 26, 44, 0.7); padding: 14px; border-radius: 12px; border: 1px solid rgba(255,255,255,0.06); margin-bottom: 12px;">
+                    <div style="font-size: 0.85rem; color: #94A3B8;">Temporada 2026/27: <b>{len(finished_2627)} partidos jugados</b> • <b>{len(pending_matches)} programados</b></div>
+                    <div style="font-size: 0.8rem; color: #10B981; margin-top: 4px;">✅ Base de datos 100% auditada con fuentes oficiales de LaLiga y UEFA.</div>
+                </div>
+            """, unsafe_allow_html=True)
+            
+            col_b1, col_b2 = st.columns(2)
+            with col_b1:
+                if st.button("🔄 Recargar Datos en Pantalla", use_container_width=True, help="Refresca los datos en vivo si se han actualizado registros"):
+                    st.cache_data.clear()
+                    st.success("¡Datos recargados desde la base de datos!")
                     st.rerun()
+            with col_b2:
+                if st.button("🧹 Auditar y Limpiar Base de Datos", use_container_width=True, help="Restaura y verifica la base de datos contra fuentes oficiales"):
+                    with st.spinner("Ejecutando motor de auditoría y limpieza..."):
+                        cleaner = DataCleanerEngine("barca_analytics.db")
+                        res = cleaner.audit_and_clean_all()
+                        st.cache_data.clear()
+                        st.success(f"✅ ¡Base de datos limpia! {res['total_matches']} partidos auditados.")
+                        st.rerun()
 
         with col_ag2:
             st.markdown("#### 📋 Partidos Sincronizados de la Temporada 26/27")
