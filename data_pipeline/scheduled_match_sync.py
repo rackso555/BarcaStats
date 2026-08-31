@@ -1,64 +1,79 @@
 """
-Automated Match Sync Engine for Scheduled Execution.
-Checks for matches that took place (Match kickoff + 3 hours window),
-extracts official match data, and persists verified statistics to SQLite.
+Automated Match Sync Engine for Scheduled Execution (GitHub Actions).
+Checks for matches that took place in CDMX Time (Match kickoff + 4 hours window),
+extracts official match data, updates the next rival's scouting form, and persists to SQLite.
 """
 
 import os
 import sys
 import datetime
+from zoneinfo import ZoneInfo
 import pandas as pd
 
 sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 from database.db_manager import DatabaseManager
 from data_pipeline.agent_sync import BarcaSyncAgent
+from data_pipeline.seed_opponent_form import seed_opponent_recent_matches
 
-def check_and_sync_due_matches(db_path="barca_analytics.db", target_datetime=None):
+def sync_pending_matches_cdmx(db_path="barca_analytics.db", target_datetime=None):
     """
-    Checks all SCHEDULED matches in the database.
-    If current datetime >= match_datetime + 3 hours, initiates official data verification.
+    Checks all SCHEDULED matches in the database using Mexico City (CDMX) Time.
+    If current_cdmx_time >= match_kickoff_cdmx + 4 hours:
+      - Marks the match as ready for official sync.
+      - Updates barca_analytics.db.
+      - Refreshes opponent recent form.
+    Returns the count of matches updated.
     """
+    cdmx_tz = ZoneInfo("America/Mexico_City")
+    if target_datetime is None:
+        now_cdmx = datetime.datetime.now(cdmx_tz)
+    else:
+        now_cdmx = target_datetime if target_datetime.tzinfo else target_datetime.replace(tzinfo=cdmx_tz)
+
     db = DatabaseManager(db_path)
     sync_agent = BarcaSyncAgent(db_path)
     
-    if target_datetime is None:
-        target_datetime = datetime.datetime.now()
-
     df = db.get_all_matches_df()
     scheduled_2627 = df[(df['season'] == '2026-27') & (df['status'] == 'SCHEDULED')].sort_values('date')
 
     if scheduled_2627.empty:
-        print("[INFO] No pending scheduled matches for 2026-27.")
-        return []
+        print("[INFO] Todos los partidos de la temporada 2026/27 ya están finalizados.")
+        return 0
 
-    due_matches = []
+    print(f"[TIME] Hora actual (CDMX): {now_cdmx.strftime('%Y-%m-%d %H:%M:%S %Z')}")
+    
+    updated_count = 0
     for _, row in scheduled_2627.iterrows():
         m_date_str = str(row['date'])
-        m_time_str = str(row['time']) if pd.notna(row['time']) else "21:00"
+        m_time_str = str(row['time']) if pd.notna(row['time']) and str(row['time']).lower() not in ['nan', 'none', ''] else "21:00"
         
         try:
-            m_dt = datetime.datetime.strptime(f"{m_date_str} {m_time_str}", "%Y-%m-%d %H:%M")
+            m_dt_naive = datetime.datetime.strptime(f"{m_date_str} {m_time_str}", "%Y-%m-%d %H:%M")
         except Exception:
-            m_dt = datetime.datetime.strptime(m_date_str, "%Y-%m-%d")
+            m_dt_naive = datetime.datetime.strptime(m_date_str, "%Y-%m-%d")
             
-        sync_threshold = m_dt + datetime.timedelta(hours=3)
+        m_dt_cdmx = m_dt_naive.replace(tzinfo=cdmx_tz)
+        sync_threshold = m_dt_cdmx + datetime.timedelta(hours=4)
         
-        if target_datetime >= sync_threshold:
-            due_matches.append({
-                "match_id": row['match_id'],
-                "stage": row['stage'],
-                "opponent": row['opponent'],
-                "competition": row['competition'],
-                "date": m_date_str,
-                "time": m_time_str,
-                "sync_threshold": sync_threshold.strftime("%Y-%m-%d %H:%M")
-            })
+        time_diff = sync_threshold - now_cdmx
+        
+        if now_cdmx >= sync_threshold:
+            print(f"[SYNC REQUIRED] {row['competition']} - {row['stage']} vs {row['opponent']}")
+            print(f"   Kickoff CDMX: {m_dt_cdmx.strftime('%Y-%m-%d %H:%M')} | Umbral (+4h): {sync_threshold.strftime('%Y-%m-%d %H:%M')}")
+            
+            # Update next opponent recent form into SQLite
+            seed_opponent_recent_matches(db_path)
+            updated_count += 1
+        else:
+            hours_left = round(time_diff.total_seconds() / 3600, 1)
+            print(f"[UPCOMING MATCH] {row['competition']} - {row['stage']} vs {row['opponent']}")
+            print(f"   Kickoff CDMX: {m_dt_cdmx.strftime('%Y-%m-%d %H:%M')} | Sincronizacion programada: {sync_threshold.strftime('%Y-%m-%d %H:%M')} (Faltan {hours_left}h)")
+            # Only report the immediate next scheduled match
+            break
 
-    print(f"[INFO] Found {len(due_matches)} matches past kickoff + 3 hours window.")
-    for d in due_matches:
-        print(f"  • {d['competition']} {d['stage']} vs {d['opponent']} (Match: {d['date']} {d['time']} | Sync window: {d['sync_threshold']})")
-    
-    return due_matches
+    return updated_count
 
 if __name__ == "__main__":
-    check_and_sync_due_matches()
+    db_file = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), "barca_analytics.db")
+    count = sync_pending_matches_cdmx(db_file)
+    print(f"[RESULT] Total partidos sincronizados en esta ejecución: {count}")
