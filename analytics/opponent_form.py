@@ -24,6 +24,12 @@ def compute_opponent_recent_form(df_opp_matches: pd.DataFrame, opponent: str, co
         (df_opp_matches['competition'] == competition)
     ].copy()
 
+    # Fallback to all competitions for this opponent if empty in specific tournament
+    if df.empty:
+        df = df_opp_matches[
+            df_opp_matches['opponent'].str.lower() == opponent.lower()
+        ].copy()
+
     if df.empty:
         return {"total_matches": 0, "opponent": opponent, "competition": competition, "matches_df": pd.DataFrame()}
 

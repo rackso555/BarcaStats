@@ -15,6 +15,13 @@ def seed_opponent_recent_matches(db_path="barca_analytics.db"):
     # Dictionary of opponents and their recent 5 league / cup matches
     # Metrics include: result, team_score, rival_score, xg_for, xg_against, possession, sot_for, sot_against, corners_for, corners_against, fouls_for, fouls_against, yellow_cards_for, yellow_cards_against
     OPPONENT_DATA = {
+        "Rayo Vallecano": [
+            {"date": "2026-08-20", "season": "2026-27", "comp": "LaLiga", "rival": "Deportivo Alavés", "home": True, "ts": 1, "rs": 1, "res": "D", "xg_f": 1.25, "xg_a": 1.10, "poss": 54.0, "sot_f": 4, "sot_a": 3, "c_f": 5, "c_a": 4, "f_f": 13, "f_a": 12, "yc_f": 2, "yc_a": 2},
+            {"date": "2026-08-15", "season": "2026-27", "comp": "LaLiga", "rival": "Sevilla FC", "home": False, "ts": 1, "rs": 2, "res": "L", "xg_f": 1.10, "xg_a": 1.65, "poss": 48.0, "sot_f": 3, "sot_a": 5, "c_f": 4, "c_a": 6, "f_f": 15, "f_a": 13, "yc_f": 3, "yc_a": 2},
+            {"date": "2026-05-24", "season": "2025-26", "comp": "LaLiga", "rival": "Villarreal CF", "home": True, "ts": 1, "rs": 3, "res": "L", "xg_f": 1.10, "xg_a": 2.30, "poss": 44.0, "sot_f": 3, "sot_a": 8, "c_f": 4, "c_a": 7, "f_f": 14, "f_a": 11, "yc_f": 3, "yc_a": 1},
+            {"date": "2026-05-18", "season": "2025-26", "comp": "LaLiga", "rival": "RCD Mallorca", "home": False, "ts": 1, "rs": 2, "res": "L", "xg_f": 0.95, "xg_a": 1.80, "poss": 49.0, "sot_f": 3, "sot_a": 5, "c_f": 3, "c_a": 5, "f_f": 16, "f_a": 14, "yc_f": 4, "yc_a": 2},
+            {"date": "2026-05-11", "season": "2025-26", "comp": "LaLiga", "rival": "Real Betis", "home": True, "ts": 2, "rs": 2, "res": "D", "xg_f": 1.70, "xg_a": 1.55, "poss": 52.0, "sot_f": 5, "sot_a": 4, "c_f": 6, "c_a": 4, "f_f": 12, "f_a": 13, "yc_f": 2, "yc_a": 2},
+        ],
         "Elche CF": [
             {"date": "2026-08-16", "season": "2026-27", "comp": "LaLiga", "rival": "Real Betis", "home": True, "ts": 1, "rs": 0, "res": "W", "xg_f": 1.45, "xg_a": 0.82, "poss": 48.0, "sot_f": 4, "sot_a": 2, "c_f": 5, "c_a": 4, "f_f": 14, "f_a": 11, "yc_f": 2, "yc_a": 3},
             {"date": "2026-05-24", "season": "2025-26", "comp": "LaLiga", "rival": "RCD Mallorca", "home": False, "ts": 1, "rs": 1, "res": "D", "xg_f": 1.10, "xg_a": 1.25, "poss": 44.0, "sot_f": 3, "sot_a": 4, "c_f": 3, "c_a": 6, "f_f": 12, "f_a": 15, "yc_f": 3, "yc_a": 2},

@@ -197,11 +197,27 @@ with tab1:
                 status_icon = "✅" if r['status'] == 'FINISHED' else "⏳"
                 match_options.append((r['match_id'], f"{status_icon} {stage_label}: {vs_label}"))
             
+            # Determinar automáticamente la jornada actual activa:
+            # 1. El primer partido programado pendiente (SCHEDULED) de la temporada/torneo.
+            # 2. Si todos ya finalizaron, el último partido disputado (el más reciente).
+            scheduled_matches = matches_available[matches_available['status'] == 'SCHEDULED']
+            if not scheduled_matches.empty:
+                active_match_id = scheduled_matches.iloc[0]['match_id']
+            else:
+                active_match_id = matches_available.iloc[-1]['match_id']
+                
+            default_idx = 0
+            for i, opt in enumerate(match_options):
+                if opt[0] == active_match_id:
+                    default_idx = i
+                    break
+
             selected_match_tuple = st.selectbox(
                 "Seleccionar Partido / Jornada",
                 match_options,
+                index=default_idx,
                 format_func=lambda x: x[1],
-                key="mc_match_select"
+                key=f"mc_match_select_{match_season}_{match_comp}"
             )
             selected_match_id = selected_match_tuple[0]
             
@@ -747,7 +763,7 @@ with tab4:
     with col_f4:
         f_opp = st.selectbox("Filtrar Rival", ["Todos"] + db.get_opponents(), key="hist_opp")
         
-    df_table = df_all.copy()
+    df_table = df_all.copy().sort_values('date', ascending=False)
     if f_season != "Todas":
         df_table = df_table[df_table['season'] == f_season]
     if f_comp != "Todas":
