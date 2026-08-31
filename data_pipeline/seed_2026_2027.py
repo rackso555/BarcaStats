@@ -606,22 +606,22 @@ MATCHES_2026_2027 = [
         "status": "SCHEDULED"
     },
 
-    # ==================== CHAMPIONS LEAGUE 2026/2027 (SORTEO OFICIAL) ====================
+    # ==================== CHAMPIONS LEAGUE 2026/2027 (CALENDARIO OFICIAL UEFA) ====================
     {
         "id": "2627_UCL_J01",
         "season": "2026-27",
         "competition": "Champions League",
         "matchday": 1,
         "stage": "Fase Liga - J1",
-        "date": "2026-09-16",
+        "date": "2026-09-09",
         "time": "21:00",
         "home_team": "FC Barcelona",
-        "away_team": "Manchester City",
+        "away_team": "Feyenoord",
         "is_barca_home": True,
-        "opponent": "Manchester City",
+        "opponent": "Feyenoord",
         "venue": "Spotify Camp Nou",
         "status": "SCHEDULED",
-        "notes": "Fase de Liga UCL - Jornada 1 vs Manchester City en Spotify Camp Nou"
+        "notes": "Fase de Liga UCL - Jornada 1 vs Feyenoord en Spotify Camp Nou"
     },
     {
         "id": "2627_UCL_J02",
@@ -629,15 +629,15 @@ MATCHES_2026_2027 = [
         "competition": "Champions League",
         "matchday": 2,
         "stage": "Fase Liga - J2",
-        "date": "2026-09-30",
+        "date": "2026-10-13",
         "time": "21:00",
-        "home_team": "Paris Saint-Germain",
+        "home_team": "Galatasaray",
         "away_team": "FC Barcelona",
         "is_barca_home": False,
-        "opponent": "Paris Saint-Germain",
-        "venue": "Parc des Princes",
+        "opponent": "Galatasaray",
+        "venue": "Rams Park",
         "status": "SCHEDULED",
-        "notes": "Fase de Liga UCL - Jornada 2 vs PSG en París"
+        "notes": "Fase de Liga UCL - Jornada 2 vs Galatasaray en Estambul"
     },
     {
         "id": "2627_UCL_J03",
@@ -645,15 +645,15 @@ MATCHES_2026_2027 = [
         "competition": "Champions League",
         "matchday": 3,
         "stage": "Fase Liga - J3",
-        "date": "2026-10-21",
+        "date": "2026-10-20",
         "time": "21:00",
-        "home_team": "FC Barcelona",
-        "away_team": "Aston Villa",
-        "is_barca_home": True,
-        "opponent": "Aston Villa",
-        "venue": "Spotify Camp Nou",
+        "home_team": "Paris Saint-Germain",
+        "away_team": "FC Barcelona",
+        "is_barca_home": False,
+        "opponent": "Paris Saint-Germain",
+        "venue": "Parc des Princes",
         "status": "SCHEDULED",
-        "notes": "Fase de Liga UCL - Jornada 3 vs Aston Villa en Spotify Camp Nou"
+        "notes": "Fase de Liga UCL - Jornada 3 vs PSG en París"
     },
     {
         "id": "2627_UCL_J04",
@@ -661,15 +661,15 @@ MATCHES_2026_2027 = [
         "competition": "Champions League",
         "matchday": 4,
         "stage": "Fase Liga - J4",
-        "date": "2026-11-04",
+        "date": "2026-11-03",
         "time": "21:00",
-        "home_team": "Sporting CP",
-        "away_team": "FC Barcelona",
-        "is_barca_home": False,
-        "opponent": "Sporting CP",
-        "venue": "Estádio José Alvalade",
+        "home_team": "FC Barcelona",
+        "away_team": "Aston Villa",
+        "is_barca_home": True,
+        "opponent": "Aston Villa",
+        "venue": "Spotify Camp Nou",
         "status": "SCHEDULED",
-        "notes": "Fase de Liga UCL - Jornada 4 vs Sporting CP en Lisboa"
+        "notes": "Fase de Liga UCL - Jornada 4 vs Aston Villa en Spotify Camp Nou"
     },
     {
         "id": "2627_UCL_J05",
@@ -679,13 +679,13 @@ MATCHES_2026_2027 = [
         "stage": "Fase Liga - J5",
         "date": "2026-11-25",
         "time": "21:00",
-        "home_team": "FC Barcelona",
-        "away_team": "Feyenoord",
-        "is_barca_home": True,
-        "opponent": "Feyenoord",
-        "venue": "Spotify Camp Nou",
+        "home_team": "Sabah",
+        "away_team": "FC Barcelona",
+        "is_barca_home": False,
+        "opponent": "Sabah",
+        "venue": "Bank Respublika Arena",
         "status": "SCHEDULED",
-        "notes": "Fase de Liga UCL - Jornada 5 vs Feyenoord en Spotify Camp Nou"
+        "notes": "Fase de Liga UCL - Jornada 5 vs Sabah en Bakú"
     },
     {
         "id": "2627_UCL_J06",
@@ -693,15 +693,15 @@ MATCHES_2026_2027 = [
         "competition": "Champions League",
         "matchday": 6,
         "stage": "Fase Liga - J6",
-        "date": "2026-12-09",
+        "date": "2026-12-08",
         "time": "21:00",
-        "home_team": "Galatasaray",
-        "away_team": "FC Barcelona",
-        "is_barca_home": False,
-        "opponent": "Galatasaray",
-        "venue": "Rams Park",
+        "home_team": "FC Barcelona",
+        "away_team": "Manchester City",
+        "is_barca_home": True,
+        "opponent": "Manchester City",
+        "venue": "Spotify Camp Nou",
         "status": "SCHEDULED",
-        "notes": "Fase de Liga UCL - Jornada 6 vs Galatasaray en Estambul"
+        "notes": "Fase de Liga UCL - Jornada 6 vs Manchester City en Spotify Camp Nou"
     },
     {
         "id": "2627_UCL_J07",
@@ -711,13 +711,13 @@ MATCHES_2026_2027 = [
         "stage": "Fase Liga - J7",
         "date": "2027-01-20",
         "time": "21:00",
-        "home_team": "FC Barcelona",
-        "away_team": "Como 1907",
-        "is_barca_home": True,
-        "opponent": "Como 1907",
-        "venue": "Spotify Camp Nou",
+        "home_team": "Sporting CP",
+        "away_team": "FC Barcelona",
+        "is_barca_home": False,
+        "opponent": "Sporting CP",
+        "venue": "Estádio José Alvalade",
         "status": "SCHEDULED",
-        "notes": "Fase de Liga UCL - Jornada 7 vs Como 1907 en Spotify Camp Nou"
+        "notes": "Fase de Liga UCL - Jornada 7 vs Sporting CP en Lisboa"
     },
     {
         "id": "2627_UCL_J08",
@@ -727,13 +727,13 @@ MATCHES_2026_2027 = [
         "stage": "Fase Liga - J8",
         "date": "2027-01-27",
         "time": "21:00",
-        "home_team": "Sabah",
-        "away_team": "FC Barcelona",
-        "is_barca_home": False,
-        "opponent": "Sabah",
-        "venue": "Bank Respublika Arena",
+        "home_team": "FC Barcelona",
+        "away_team": "Como 1907",
+        "is_barca_home": True,
+        "opponent": "Como 1907",
+        "venue": "Spotify Camp Nou",
         "status": "SCHEDULED",
-        "notes": "Fase de Liga UCL - Jornada 8 vs Sabah en Bakú"
+        "notes": "Fase de Liga UCL - Jornada 8 vs Como 1907 en Spotify Camp Nou"
     },
 
     # ==================== SUPERCOPA 2027 ====================
