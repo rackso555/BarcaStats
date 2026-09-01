@@ -19,24 +19,19 @@ import analytics.momentum
 import analytics.h2h
 import analytics.radars
 import analytics.opponent_form
-import components.auth
 
 importlib.reload(components.charts)
 importlib.reload(analytics.momentum)
 importlib.reload(analytics.h2h)
 importlib.reload(analytics.radars)
 importlib.reload(analytics.opponent_form)
-importlib.reload(components.auth)
 
 from database.db_manager import DatabaseManager
 from analytics.momentum import get_multi_season_progression, calculate_momentum_index
 from analytics.h2h import calculate_h2h_summary
 from analytics.radars import compute_team_radar_metrics
 from analytics.opponent_form import compute_opponent_recent_form
-from data_pipeline.agent_sync import BarcaSyncAgent
-from data_pipeline.data_cleaner import DataCleanerEngine
 from components.theme import apply_barca_theme
-from components.auth import render_auth_sidebar, render_tab5_admin_prompt
 from components.charts import (
     create_multi_season_points_chart,
     create_momentum_chart,
@@ -61,12 +56,8 @@ st.set_page_config(
 # Apply Blaugrana UI Styles
 apply_barca_theme()
 
-# Render auth controls in sidebar (Defaults to Viewer mode, Admin login available)
-user_role = render_auth_sidebar()
-
-# Database and Sync Agent instances
+# Database instance
 db = DatabaseManager("barca_analytics.db")
-sync_agent = BarcaSyncAgent("barca_analytics.db")
 
 # Always reload fresh data from database
 df_all = db.get_all_matches_df()
@@ -152,21 +143,15 @@ st.markdown(f"""
             <h1>FC BARCELONA • MATCH ANALYTICS HUB</h1>
             <p>Comparativas de Rendimiento • Temporadas 2024/25, 2025/26 y 2026/27</p>
         </div>
-        <div style="text-align: right;">
-            <span style="background: rgba(0,0,0,0.3); border: 1px solid rgba(237,187,0,0.5); color: #EDBB00; padding: 6px 14px; border-radius: 20px; font-weight: 700; font-size: 0.9rem;">
-                ⚡ 100% Local & Zero-Tokens
-            </span>
-        </div>
     </div>
 """, unsafe_allow_html=True)
 
 # ----------------- TABS NAVIGATION -----------------
-tab1, tab2, tab3, tab4, tab5 = st.tabs([
+tab1, tab2, tab3, tab4 = st.tabs([
     "🏟️ Match Center & Previa",
     "📈 Momentum & Progresión",
     "🎯 Perfil Táctico & Radar",
-    "📋 Historial de Partidos",
-    "🤖 Control de Datos & Auditoría"
+    "📋 Historial de Partidos"
 ])
 
 # =====================================================================
@@ -810,70 +795,4 @@ with tab4:
         mime="text/csv"
     )
 
-# =====================================================================
-# TAB 5: AGENTE DE SINCRONIZACIÓN AUTOMÁTICA & LIMPIEZA (ROLE PROTECTED)
-# =====================================================================
-with tab5:
-    st.subheader("🤖 Panel de Control de Datos & Auditoría Oficial")
-    
-    if user_role != "ADMIN":
-        render_tab5_admin_prompt()
-    else:
-        st.markdown("""
-            Panel de control de datos oficial para el **Administrador**.
-            Aquí puedes supervisar la integridad de los datos, forzar la recarga en tiempo real o ejecutar la auditoría completa de fuentes oficiales.
-        """)
-        
-        col_ag1, col_ag2 = st.columns([1.1, 0.9])
-        
-        with col_ag1:
-            st.markdown("#### ⚡ Control y Estado de la Base de Datos")
-            
-            pending_matches = sync_agent.get_pending_matches("2026-27")
-            finished_2627 = df_all[(df_all['season'] == '2026-27') & (df_all['status'] == 'FINISHED')]
-            
-            st.markdown(f"""
-                <div style="background: rgba(18, 26, 44, 0.7); padding: 14px; border-radius: 12px; border: 1px solid rgba(255,255,255,0.06); margin-bottom: 12px;">
-                    <div style="font-size: 0.85rem; color: #94A3B8;">Temporada 2026/27: <b>{len(finished_2627)} partidos jugados</b> • <b>{len(pending_matches)} programados</b></div>
-                    <div style="font-size: 0.8rem; color: #10B981; margin-top: 4px;">✅ Base de datos 100% auditada con fuentes oficiales de LaLiga y UEFA.</div>
-                </div>
-            """, unsafe_allow_html=True)
-            
-            col_b1, col_b2 = st.columns(2)
-            with col_b1:
-                if st.button("🔄 Recargar Datos en Pantalla", use_container_width=True, help="Refresca los datos en vivo si se han actualizado registros"):
-                    st.cache_data.clear()
-                    st.success("¡Datos recargados desde la base de datos!")
-                    st.rerun()
-            with col_b2:
-                if st.button("🧹 Auditar y Limpiar Base de Datos", use_container_width=True, help="Restaura y verifica la base de datos contra fuentes oficiales"):
-                    with st.spinner("Ejecutando motor de auditoría y limpieza..."):
-                        cleaner = DataCleanerEngine("barca_analytics.db")
-                        res = cleaner.audit_and_clean_all()
-                        st.cache_data.clear()
-                        st.success(f"✅ ¡Base de datos limpia! {res['total_matches']} partidos auditados.")
-                        st.rerun()
 
-        with col_ag2:
-            st.markdown("#### 📋 Partidos Sincronizados de la Temporada 26/27")
-            synced_2627 = df_all[(df_all['season'] == '2026-27') & (df_all['status'] == 'FINISHED')].sort_values('date', ascending=False)
-            
-            if synced_2627.empty:
-                st.info("Aún no hay partidos finalizados en 2026/27. Pulsa en 'Sincronizar Próxima Jornada' para registrar el primer encuentro.")
-            else:
-                for _, s_m in synced_2627.iterrows():
-                    res_class = "badge-win" if s_m['result'] == 'W' else ("badge-draw" if s_m['result'] == 'D' else "badge-loss")
-                    st.markdown(f"""
-                        <div style="background: rgba(18, 26, 44, 0.7); padding: 12px; border-radius: 10px; margin-bottom: 8px; border: 1px solid rgba(255,255,255,0.05);">
-                            <div style="display: flex; justify-content: space-between; align-items: center;">
-                                <div>
-                                    <b>{s_m['stage']} vs {s_m['opponent']}</b><br>
-                                    <span style="font-size: 0.8rem; color: #94A3B8;">📅 {s_m['date']} • xG: {s_m.get('barca_xg', 0)} - {s_m.get('opp_xg', 0)}</span>
-                                </div>
-                                <div style="text-align: right;">
-                                    <span style="font-size: 1.2rem; font-weight: 800; color: #EDBB00;">{s_m['barca_score']} - {s_m['opp_score']}</span>
-                                    <div><span class="{res_class}">{s_m['result']}</span></div>
-                                </div>
-                            </div>
-                        </div>
-                    """, unsafe_allow_html=True)
