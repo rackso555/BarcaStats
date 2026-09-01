@@ -2,8 +2,9 @@ name: Sync Barça Match Stats (+4h CDMX)
 
 on:
   schedule:
-    # Run at the top of every hour (UTC) to check if any match reached kickoff + 4h (CDMX time)
-    - cron: '0 * * * *'
+    # Se ejecuta solo en las ventanas posteriores a los partidos (17:00 y 21:00 tiempo CDMX)
+    # en lugar de ejecutarse cada hora innecesariamente.
+    - cron: '0 3,23 * * *'
   workflow_dispatch:
 
 permissions:
