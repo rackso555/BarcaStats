@@ -76,4 +76,4 @@ def sync_pending_matches_cdmx(db_path="barca_analytics.db", target_datetime=None
 if __name__ == "__main__":
     db_file = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), "barca_analytics.db")
     count = sync_pending_matches_cdmx(db_file)
-    print(f"[RESULT] Total partidos sincronizados en esta ejecución: {count}")
+    print(f"[RESULT] Total partidos sincronizados: {count}")
