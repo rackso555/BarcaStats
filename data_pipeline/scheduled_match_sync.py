@@ -61,9 +61,15 @@ def sync_pending_matches_cdmx(db_path="barca_analytics.db", target_datetime=None
             print(f"[SYNC REQUIRED] {row['competition']} - {row['stage']} vs {row['opponent']}")
             print(f"   Kickoff CDMX: {m_dt_cdmx.strftime('%Y-%m-%d %H:%M')} | Umbral (+4h): {sync_threshold.strftime('%Y-%m-%d %H:%M')}")
             
+            # Execute database cleaner & reload to persist verified stats
+            from data_pipeline.data_cleaner import DataCleanerEngine
+            cleaner = DataCleanerEngine(db_path)
+            cleaner.audit_and_clean_all()
+            
             # Update next opponent recent form into SQLite
             seed_opponent_recent_matches(db_path)
             updated_count += 1
+            print(f"[SUCCESS] Partido {row['stage']} vs {row['opponent']} sincronizado exitosamente en barca_analytics.db!")
         else:
             hours_left = round(time_diff.total_seconds() / 3600, 1)
             print(f"[UPCOMING MATCH] {row['competition']} - {row['stage']} vs {row['opponent']}")

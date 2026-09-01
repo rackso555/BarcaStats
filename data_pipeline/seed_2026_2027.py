@@ -74,7 +74,19 @@ MATCHES_2026_2027 = [
         "is_barca_home": True,
         "opponent": "Rayo Vallecano",
         "venue": "Spotify Camp Nou",
-        "status": "SCHEDULED"
+        "referee": "César Soto Grado",
+        "status": "FINISHED",
+        "barca_score": 5,
+        "opp_score": 2,
+        "notes": "Victoria 5-2 en el Spotify Camp Nou. Doblete de Lamine Yamal (21', 90'), doblete de Raphinha (19', 71') y autogol de Lejeune (51'). Pleno de 9 puntos en LaLiga.",
+        "stats": {
+            "barca_xg": 2.83, "opp_xg": 1.09, "barca_possession": 69.0, "opp_possession": 31.0,
+            "barca_shots": 26, "opp_shots": 11, "barca_shots_on_target": 9, "opp_shots_on_target": 5,
+            "barca_corners": 9, "opp_corners": 3, "barca_fouls": 9, "opp_fouls": 15,
+            "barca_yellow_cards": 1, "opp_yellow_cards": 3, "barca_red_cards": 0, "opp_red_cards": 0,
+            "barca_offsides": 4, "opp_offsides": 3, "barca_pass_acc": 90.0, "opp_pass_acc": 74.0,
+            "barca_saves": 3, "opp_saves": 5, "barca_big_chances": 5, "opp_big_chances": 2
+        }
     },
     {
         "id": "2627_LALIGA_J04",
