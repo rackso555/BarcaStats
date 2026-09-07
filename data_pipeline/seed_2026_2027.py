@@ -101,7 +101,19 @@ MATCHES_2026_2027 = [
         "is_barca_home": False,
         "opponent": "Valencia CF",
         "venue": "Mestalla",
-        "status": "SCHEDULED"
+        "referee": "Jesús Gil Manzano",
+        "status": "FINISHED",
+        "barca_score": 5,
+        "opp_score": 0,
+        "notes": "Goleada 0-5 en Mestalla. Doblete de Lamine Yamal (6', 85'), tantos de Fermín López (22'), Raphinha (50') y Pedri (79'). Pleno de 12 puntos y liderato en solitario de LaLiga.",
+        "stats": {
+            "barca_xg": 3.87, "opp_xg": 0.42, "barca_possession": 74.0, "opp_possession": 26.0,
+            "barca_shots": 25, "opp_shots": 5, "barca_shots_on_target": 11, "opp_shots_on_target": 1,
+            "barca_corners": 8, "opp_corners": 2, "barca_fouls": 9, "opp_fouls": 16,
+            "barca_yellow_cards": 1, "opp_yellow_cards": 3, "barca_red_cards": 0, "opp_red_cards": 0,
+            "barca_offsides": 3, "opp_offsides": 2, "barca_pass_acc": 92.0, "opp_pass_acc": 68.0,
+            "barca_saves": 1, "opp_saves": 6, "barca_big_chances": 6, "opp_big_chances": 0
+        }
     },
     {
         "id": "2627_LALIGA_J05",
@@ -626,7 +638,7 @@ MATCHES_2026_2027 = [
         "matchday": 1,
         "stage": "Fase Liga - J1",
         "date": "2026-09-09",
-        "time": "21:00",
+        "time": "13:00",
         "home_team": "FC Barcelona",
         "away_team": "Feyenoord",
         "is_barca_home": True,

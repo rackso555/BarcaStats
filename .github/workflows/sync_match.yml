@@ -4,7 +4,7 @@ on:
   schedule:
     # Se ejecuta solo en las ventanas posteriores a los partidos (17:00 y 21:00 tiempo CDMX)
     # en lugar de ejecutarse cada hora innecesariamente.
-    - cron: '15 2 7 9 *'
+    - cron: '0 7 10 9 *'
   workflow_dispatch:
 
 permissions:
@@ -38,6 +38,8 @@ jobs:
 
       - name: Commit and push changes if updated
         run: |
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "github-actions[bot]@users.noreply.github.com"
           git add barca_analytics.db .github/workflows/sync_match.yml
           if ! git diff --staged --quiet; then
             echo "Changes detected. Committing and pushing to main..."
