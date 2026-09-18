@@ -128,7 +128,19 @@ MATCHES_2026_2027 = [
         "is_barca_home": False,
         "opponent": "Levante UD",
         "venue": "Ciutat de València",
-        "status": "SCHEDULED"
+        "referee": "Alejandro Muñiz Ruiz",
+        "status": "FINISHED",
+        "barca_score": 4,
+        "opp_score": 2,
+        "notes": "Victoria 2-4 en el Ciutat de València. Doblete de Lamine Yamal (19', 48'p), goles de Xavi Espart (5') y Karim Adeyemi (93'); Iván Romero (79') y Roger Brugué (88') descontaron para Levante. Pleno de 15 puntos en LaLiga.",
+        "stats": {
+            "barca_xg": 2.95, "opp_xg": 1.15, "barca_possession": 62.0, "opp_possession": 38.0,
+            "barca_shots": 19, "opp_shots": 8, "barca_shots_on_target": 8, "opp_shots_on_target": 3,
+            "barca_corners": 7, "opp_corners": 3, "barca_fouls": 11, "opp_fouls": 14,
+            "barca_yellow_cards": 1, "opp_yellow_cards": 2, "barca_red_cards": 0, "opp_red_cards": 0,
+            "barca_offsides": 4, "opp_offsides": 1, "barca_pass_acc": 89.0, "opp_pass_acc": 76.0,
+            "barca_saves": 1, "opp_saves": 4, "barca_big_chances": 5, "opp_big_chances": 2
+        }
     },
     {
         "id": "2627_LALIGA_J06",
@@ -143,7 +155,19 @@ MATCHES_2026_2027 = [
         "is_barca_home": True,
         "opponent": "Racing de Santander",
         "venue": "Spotify Camp Nou",
-        "status": "SCHEDULED"
+        "referee": "Juan Martínez Munuera",
+        "status": "FINISHED",
+        "barca_score": 7,
+        "opp_score": 2,
+        "notes": "Exhibición 7-2 en el Spotify Camp Nou. Triplete de Raphinha (14'p, 42', 65'p), doblete de João Cancelo (28', 53'), goles de Lamine Yamal (35') y Gabriel Jesus (81'); Maguette Gueye (49') y Yassir Zabiri (74') para Racing. Récord histórico con 18 de 18 puntos en LaLiga.",
+        "stats": {
+            "barca_xg": 3.80, "opp_xg": 0.95, "barca_possession": 71.0, "opp_possession": 29.0,
+            "barca_shots": 26, "opp_shots": 6, "barca_shots_on_target": 12, "opp_shots_on_target": 3,
+            "barca_corners": 9, "opp_corners": 2, "barca_fouls": 8, "opp_fouls": 15,
+            "barca_yellow_cards": 1, "opp_yellow_cards": 3, "barca_red_cards": 0, "opp_red_cards": 0,
+            "barca_offsides": 3, "opp_offsides": 3, "barca_pass_acc": 92.0, "opp_pass_acc": 71.0,
+            "barca_saves": 1, "opp_saves": 5, "barca_big_chances": 7, "opp_big_chances": 1
+        }
     },
     {
         "id": "2627_LALIGA_J07",
@@ -644,8 +668,19 @@ MATCHES_2026_2027 = [
         "is_barca_home": True,
         "opponent": "Feyenoord",
         "venue": "Spotify Camp Nou",
-        "status": "SCHEDULED",
-        "notes": "Fase de Liga UCL - Jornada 1 vs Feyenoord en Spotify Camp Nou"
+        "referee": "Clément Turpin",
+        "status": "FINISHED",
+        "barca_score": 5,
+        "opp_score": 1,
+        "notes": "Goleada 5-1 en el debut de Champions League en Spotify Camp Nou. Doblete de Raphinha (3', 57'), goles de Karim Adeyemi (22'), Lamine Yamal (77') y Gabriel Jesus (85'); Sem Steijn (82') descontó para Feyenoord.",
+        "stats": {
+            "barca_xg": 2.10, "opp_xg": 0.53, "barca_possession": 72.0, "opp_possession": 28.0,
+            "barca_shots": 24, "opp_shots": 4, "barca_shots_on_target": 9, "opp_shots_on_target": 2,
+            "barca_corners": 8, "opp_corners": 2, "barca_fouls": 10, "opp_fouls": 12,
+            "barca_yellow_cards": 1, "opp_yellow_cards": 1, "barca_red_cards": 0, "opp_red_cards": 0,
+            "barca_offsides": 3, "opp_offsides": 2, "barca_pass_acc": 91.0, "opp_pass_acc": 72.0,
+            "barca_saves": 1, "opp_saves": 4, "barca_big_chances": 5, "opp_big_chances": 1
+        }
     },
     {
         "id": "2627_UCL_J02",

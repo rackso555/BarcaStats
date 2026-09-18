@@ -15,9 +15,10 @@ def seed_season_data(matches_list: list, db_path: str = "barca_analytics.db"):
     db = DatabaseManager(db_path)
     count = 0
     
-    for item in matches_list:
-        stats_data = item.pop('stats', {})
-        match_data = item
+    for raw_item in matches_list:
+        item = dict(raw_item)
+        stats_data = dict(item.get('stats', {}))
+        match_data = {k: v for k, v in item.items() if k != 'stats'}
         
         # Calculate result and points if finished and not present
         if match_data.get('status') == 'FINISHED' and match_data.get('barca_score') is not None and match_data.get('opp_score') is not None:
