@@ -182,7 +182,19 @@ MATCHES_2026_2027 = [
         "is_barca_home": False,
         "opponent": "Sevilla FC",
         "venue": "Ramón Sánchez-Pizjuán",
-        "status": "SCHEDULED"
+        "referee": "César Soto Grado",
+        "status": "FINISHED",
+        "barca_score": 3,
+        "opp_score": 1,
+        "notes": "Remontada 1-3 en el Ramón Sánchez-Pizjuán. Hat-trick estelar de Raphinha (22', 52', 69') tras el gol inicial de Youssouf Fofana (19'). Pleno de 21 puntos en LaLiga.",
+        "stats": {
+            "barca_xg": 2.65, "opp_xg": 0.82, "barca_possession": 69.5, "opp_possession": 30.5,
+            "barca_shots": 24, "opp_shots": 7, "barca_shots_on_target": 7, "opp_shots_on_target": 3,
+            "barca_corners": 3, "opp_corners": 1, "barca_fouls": 11, "opp_fouls": 10,
+            "barca_yellow_cards": 0, "opp_yellow_cards": 1, "barca_red_cards": 0, "opp_red_cards": 0,
+            "barca_offsides": 2, "opp_offsides": 5, "barca_pass_acc": 90.0, "opp_pass_acc": 73.0,
+            "barca_saves": 2, "opp_saves": 4, "barca_big_chances": 5, "opp_big_chances": 1
+        }
     },
     {
         "id": "2627_LALIGA_J08",
@@ -197,7 +209,19 @@ MATCHES_2026_2027 = [
         "is_barca_home": True,
         "opponent": "Getafe CF",
         "venue": "Spotify Camp Nou",
-        "status": "SCHEDULED"
+        "referee": "Guillermo Cuadra Fernández",
+        "status": "FINISHED",
+        "barca_score": 3,
+        "opp_score": 0,
+        "notes": "Victoria contundente 3-0 en el Spotify Camp Nou. Goles tempraneros de Anthony Gordon (2'), Gabriel Jesus (30') y sentencia de Jules Koundé (73'). Dominio absoluto con 83% de posesión y 8 victorias consecutivas.",
+        "stats": {
+            "barca_xg": 2.85, "opp_xg": 0.22, "barca_possession": 82.7, "opp_possession": 17.3,
+            "barca_shots": 14, "opp_shots": 3, "barca_shots_on_target": 8, "opp_shots_on_target": 1,
+            "barca_corners": 9, "opp_corners": 3, "barca_fouls": 9, "opp_fouls": 11,
+            "barca_yellow_cards": 2, "opp_yellow_cards": 4, "barca_red_cards": 0, "opp_red_cards": 0,
+            "barca_offsides": 1, "opp_offsides": 3, "barca_pass_acc": 92.5, "opp_pass_acc": 65.0,
+            "barca_saves": 1, "opp_saves": 5, "barca_big_chances": 5, "opp_big_chances": 0
+        }
     },
     {
         "id": "2627_LALIGA_J09",
@@ -212,7 +236,19 @@ MATCHES_2026_2027 = [
         "is_barca_home": False,
         "opponent": "Real Betis",
         "venue": "Benito Villamarín",
-        "status": "SCHEDULED"
+        "referee": "José María Sánchez Martínez",
+        "status": "FINISHED",
+        "barca_score": 5,
+        "opp_score": 2,
+        "notes": "Festival ofensivo 2-5 en Sevilla. Golazos de Lamine Yamal (10'), Rodri (40'), Gabriel Jesus (51'), Eric García (62') y Dani Olmo (80'); Valentín Gómez (26') y Abde (53') para el Betis. Pleno histórico de 27 de 27 puntos.",
+        "stats": {
+            "barca_xg": 3.45, "opp_xg": 1.20, "barca_possession": 69.3, "opp_possession": 30.7,
+            "barca_shots": 16, "opp_shots": 5, "barca_shots_on_target": 10, "opp_shots_on_target": 5,
+            "barca_corners": 5, "opp_corners": 2, "barca_fouls": 11, "opp_fouls": 10,
+            "barca_yellow_cards": 2, "opp_yellow_cards": 3, "barca_red_cards": 0, "opp_red_cards": 1,
+            "barca_offsides": 2, "opp_offsides": 3, "barca_pass_acc": 91.0, "opp_pass_acc": 72.0,
+            "barca_saves": 3, "opp_saves": 5, "barca_big_chances": 6, "opp_big_chances": 1
+        }
     },
     {
         "id": "2627_LALIGA_J10",
@@ -695,8 +731,19 @@ MATCHES_2026_2027 = [
         "is_barca_home": False,
         "opponent": "Galatasaray",
         "venue": "Rams Park",
-        "status": "SCHEDULED",
-        "notes": "Fase de Liga UCL - Jornada 2 vs Galatasaray en Estambul"
+        "referee": "Anthony Taylor",
+        "status": "FINISHED",
+        "barca_score": 4,
+        "opp_score": 1,
+        "notes": "Remontada y goleada 1-4 en el RAMS Park de Estambul. Tantos de João Cancelo (43'), Fermín López (50'), Anthony Gordon (53') y Karim Adeyemi (65') tras el gol de Batrakov (28'). Pleno de 6 puntos en Champions League.",
+        "stats": {
+            "barca_xg": 2.83, "opp_xg": 0.43, "barca_possession": 71.0, "opp_possession": 29.0,
+            "barca_shots": 22, "opp_shots": 5, "barca_shots_on_target": 11, "opp_shots_on_target": 3,
+            "barca_corners": 6, "opp_corners": 1, "barca_fouls": 10, "opp_fouls": 12,
+            "barca_yellow_cards": 0, "opp_yellow_cards": 2, "barca_red_cards": 0, "opp_red_cards": 0,
+            "barca_offsides": 7, "opp_offsides": 8, "barca_pass_acc": 90.0, "opp_pass_acc": 70.0,
+            "barca_saves": 2, "opp_saves": 7, "barca_big_chances": 9, "opp_big_chances": 0
+        }
     },
     {
         "id": "2627_UCL_J03",
