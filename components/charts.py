@@ -99,35 +99,60 @@ def create_match_comparison_bars(match_row: pd.Series, selected_metric_keys: lis
             opp_vals.append(0.0 if pd.isna(o_val) else round(float(o_val), 2))
 
     opp_name = match_row.get('opponent', 'Rival')
+    is_barca_home = bool(match_row.get('is_barca_home', True))
+    home_name = match_row.get('home_team', 'FC Barcelona' if is_barca_home else str(opp_name))
+    away_name = match_row.get('away_team', str(opp_name) if is_barca_home else 'FC Barcelona')
 
     fig = go.Figure()
+
+    # Define trace 1 (Local team) and trace 2 (Visitante team)
+    if is_barca_home:
+        t1_name = "FC Barcelona (Local)"
+        t1_vals = barca_vals
+        t1_color = COLOR_BARCA_GARNET
+        t1_border = COLOR_BARCA_GOLD
+        
+        t2_name = f"{opp_name} (Visitante)"
+        t2_vals = opp_vals
+        t2_color = COLOR_OPPONENT
+        t2_border = COLOR_OPPONENT_BORDER
+    else:
+        t1_name = f"{opp_name} (Local)"
+        t1_vals = opp_vals
+        t1_color = COLOR_OPPONENT
+        t1_border = COLOR_OPPONENT_BORDER
+        
+        t2_name = "FC Barcelona (Visitante)"
+        t2_vals = barca_vals
+        t2_color = COLOR_BARCA_GARNET
+        t2_border = COLOR_BARCA_GOLD
     
-    # Trace for FC Barcelona
+    # Trace for Local Team
     fig.add_trace(go.Bar(
         y=labels,
-        x=barca_vals,
-        name="FC Barcelona",
+        x=t1_vals,
+        name=t1_name,
         orientation='h',
         marker=dict(
-            color=COLOR_BARCA_GARNET,
-            line=dict(color=COLOR_BARCA_GOLD, width=1.5)
+            color=t1_color,
+            line=dict(color=t1_border, width=1.5)
         ),
-        text=[f" {v}" for v in barca_vals],
+        text=[f" {v}" for v in t1_vals],
         textposition='auto',
         textfont=dict(color="#FFFFFF", size=12, family="Outfit, sans-serif")
     ))
     
-    # Trace for Opponent
+    # Trace for Away Team
     fig.add_trace(go.Bar(
         y=labels,
-        x=opp_vals,
-        name=str(opp_name),
+        x=t2_vals,
+        name=t2_name,
         orientation='h',
         marker=dict(
-            color=COLOR_OPPONENT,
-            line=dict(color=COLOR_OPPONENT_BORDER, width=1.5)
+            color=t2_color,
+            line=dict(color=t2_border, width=1.5)
         ),
-        text=[f" {v}" for v in opp_vals],
+        text=[f" {v}" for v in t2_vals],
         textposition='auto',
         textfont=dict(color="#FFFFFF", size=12, family="Outfit, sans-serif")
     ))
@@ -136,7 +161,7 @@ def create_match_comparison_bars(match_row: pd.Series, selected_metric_keys: lis
 
     fig.update_layout(
         title=dict(
-            text=f"📊 Comparativa Lado a Lado: FC Barcelona vs {opp_name}",
+            text=f"📊 Comparativa Lado a Lado: {home_name} vs {away_name}",
             font=dict(color="#F8FAFC", size=15, family="Outfit, sans-serif"),
             x=0.01,
             y=0.98

@@ -214,10 +214,14 @@ with tab1:
         home_name = current_match['home_team']
         away_name = current_match['away_team']
         is_finished = current_match['status'] == 'FINISHED'
-        score_text = f"{int(current_match['barca_score'])} - {int(current_match['opp_score'])}" if is_finished else "VS"
+        is_barca_home = bool(current_match['is_barca_home'])
         
-        home_color = "#EDBB00" if current_match['is_barca_home'] else "#FFFFFF"
-        away_color = "#FFFFFF" if current_match['is_barca_home'] else "#EDBB00"
+        home_score = int(current_match['barca_score'] if is_barca_home else current_match['opp_score']) if (is_finished and pd.notna(current_match['barca_score'])) else None
+        away_score = int(current_match['opp_score'] if is_barca_home else current_match['barca_score']) if (is_finished and pd.notna(current_match['opp_score'])) else None
+        score_text = f"{home_score} - {away_score}" if (is_finished and home_score is not None and away_score is not None) else "VS"
+        
+        home_color = "#EDBB00" if is_barca_home else "#FFFFFF"
+        away_color = "#FFFFFF" if is_barca_home else "#EDBB00"
         
         venue_display = str(current_match['venue']) if (pd.notna(current_match['venue']) and str(current_match['venue']).lower() not in ['nan', 'none', '']) else 'Estadio Oficial'
         referee_display = str(current_match['referee']) if (pd.notna(current_match['referee']) and str(current_match['referee']).lower() not in ['nan', 'none', '']) else 'Árbitro Oficial'
@@ -425,7 +429,7 @@ with tab1:
         # Determine which specific match stats to plot (per-match data, zero sums/averages)
         if is_finished:
             match_data_for_chart = current_match
-            st.caption(f"✅ Mostrando estadísticas oficiales individuales del partido: {current_match['date']} ({current_match['home_team']} {int(current_match['barca_score'])}-{int(current_match['opp_score'])} {current_match['away_team']})")
+            st.caption(f"✅ Mostrando estadísticas oficiales individuales del partido: {current_match['date']} ({current_match['home_team']} {home_score}-{away_score} {current_match['away_team']})")
         else:
             # If match is scheduled, let user pick which specific past duel to inspect
             if h2h['total_matches'] > 0:
@@ -454,23 +458,40 @@ with tab1:
             # Active Stat Metric Chips
             st.markdown("##### 📌 Desglose de Estadísticas de este Partido")
             chips_cols = st.columns(min(4, max(2, len(selected_metric_keys))))
+            
+            is_chart_match_home = bool(match_data_for_chart.get('is_barca_home', True))
+            home_tname = str(match_data_for_chart.get('home_team', 'FC Barcelona' if is_chart_match_home else opponent_name))
+            away_tname = str(match_data_for_chart.get('away_team', opponent_name if is_chart_match_home else 'FC Barcelona'))
+            chip_home_color = "#EDBB00" if is_chart_match_home else "#94A3B8"
+            chip_away_color = "#94A3B8" if is_chart_match_home else "#EDBB00"
+
             for idx, k in enumerate(selected_metric_keys):
                 col_idx = idx % len(chips_cols)
                 meta = ALL_COMPARISON_METRICS[k]
                 m_label, b_field, o_field = meta[0], meta[1], meta[2]
                 b_val = match_data_for_chart.get(b_field, 0)
                 o_val = match_data_for_chart.get(o_field, 0)
-                b_val_str = "0" if pd.isna(b_val) else str(b_val)
-                o_val_str = "0" if pd.isna(o_val) else str(o_val)
+                
+                h_val = b_val if is_chart_match_home else o_val
+                a_val = o_val if is_chart_match_home else b_val
+                
+                h_val_str = "0" if pd.isna(h_val) else (f"{float(h_val):.2f}" if isinstance(h_val, float) and not float(h_val).is_integer() else str(int(h_val) if isinstance(h_val, (int, float)) and float(h_val).is_integer() else h_val))
+                a_val_str = "0" if pd.isna(a_val) else (f"{float(a_val):.2f}" if isinstance(a_val, float) and not float(a_val).is_integer() else str(int(a_val) if isinstance(a_val, (int, float)) and float(a_val).is_integer() else a_val))
                 
                 with chips_cols[col_idx]:
                     st.markdown(f"""
                         <div class="metric-card" style="padding: 10px 14px; margin-bottom: 8px;">
-                            <div class="metric-title" style="font-size: 0.8rem;">{m_label}</div>
-                            <div style="display: flex; justify-content: space-between; align-items: baseline; margin-top: 4px;">
-                                <span style="color: #EDBB00; font-size: 1.2rem; font-weight: 800;">{b_val_str}</span>
-                                <span style="color: #94A3B8; font-size: 0.75rem;">vs</span>
-                                <span style="color: #94A3B8; font-size: 1.1rem; font-weight: 700;">{o_val_str}</span>
+                            <div class="metric-title" style="font-size: 0.8rem; margin-bottom: 6px;">{m_label}</div>
+                            <div style="display: flex; justify-content: space-between; align-items: baseline;">
+                                <div>
+                                    <span style="font-size: 0.7rem; color: #94A3B8; font-weight: 700; display: block;">{home_tname[:14]}</span>
+                                    <span style="color: {chip_home_color}; font-size: 1.25rem; font-weight: 800;">{h_val_str}</span>
+                                </div>
+                                <span style="color: #64748B; font-size: 0.75rem; margin: 0 4px;">vs</span>
+                                <div style="text-align: right;">
+                                    <span style="font-size: 0.7rem; color: #94A3B8; font-weight: 700; display: block;">{away_tname[:14]}</span>
+                                    <span style="color: {chip_away_color}; font-size: 1.25rem; font-weight: 800;">{a_val_str}</span>
+                                </div>
                             </div>
                         </div>
                     """, unsafe_allow_html=True)
@@ -492,33 +513,39 @@ with tab1:
                 ref_name = str(h_match['referee']) if pd.notna(h_match['referee']) and str(h_match['referee']).lower() not in ['nan', 'none', ''] else 'Árbitro Oficial'
                 notes_name = str(h_match['notes']) if pd.notna(h_match['notes']) and str(h_match['notes']).lower() not in ['nan', 'none', ''] else 'Sin incidencias'
                 
-                with st.expander(f"📅 {h_match['date']} | {stage_label} | Marcador: {int(h_match['barca_score'])} - {int(h_match['opp_score'])} ({res_badge})"):
+                h_is_home = bool(h_match.get('is_barca_home', True))
+                h_sc = int(h_match['barca_score'] if h_is_home else h_match['opp_score']) if pd.notna(h_match.get('barca_score')) else 0
+                a_sc = int(h_match['opp_score'] if h_is_home else h_match['barca_score']) if pd.notna(h_match.get('opp_score')) else 0
+                m_home = h_match.get('home_team', 'FC Barcelona' if h_is_home else opponent_name)
+                m_away = h_match.get('away_team', opponent_name if h_is_home else 'FC Barcelona')
+
+                with st.expander(f"📅 {h_match['date']} | {stage_label} | {m_home} {h_sc} - {a_sc} {m_away} ({res_badge})"):
                     col_d1, col_d2, col_d3 = st.columns(3)
                     with col_d1:
                         st.markdown(f"""
                             <b>📌 Datos Generales:</b><br>
                             • <b>Estadio:</b> {v_name}<br>
-                            • <b>Condición:</b> {'Local (Camp Nou/Montjuïc)' if h_match['is_barca_home'] else 'Visitante'}<br>
+                            • <b>Condición:</b> {'Local (Camp Nou/Montjuïc)' if h_is_home else 'Visitante'}<br>
                             • <b>Árbitro:</b> {ref_name}<br>
                             • <b>Notas:</b> {notes_name}
                         """, unsafe_allow_html=True)
                     with col_d2:
                         st.markdown(f"""
                             <b>⚽ Ataque y Posesión:</b><br>
-                            • <b>Posesión:</b> {h_match.get('barca_possession', 50)}% vs {h_match.get('opp_possession', 50)}%<br>
-                            • <b>Expected Goals (xG):</b> {h_match.get('barca_xg', 0)} vs {h_match.get('opp_xg', 0)}<br>
-                            • <b>Tiros Totales:</b> {h_match.get('barca_shots', 0)} vs {h_match.get('opp_shots', 0)}<br>
-                            • <b>Tiros a Puerta:</b> {h_match.get('barca_shots_on_target', 0)} vs {h_match.get('opp_shots_on_target', 0)}<br>
-                            • <b>Grandes Ocasiones:</b> {h_match.get('barca_big_chances', 0)} vs {h_match.get('opp_big_chances', 0)}
+                            • <b>Posesión:</b> Barça {h_match.get('barca_possession', 50)}% | {opponent_name} {h_match.get('opp_possession', 50)}%<br>
+                            • <b>Expected Goals (xG):</b> Barça {h_match.get('barca_xg', 0)} | {opponent_name} {h_match.get('opp_xg', 0)}<br>
+                            • <b>Tiros Totales:</b> Barça {h_match.get('barca_shots', 0)} | {opponent_name} {h_match.get('opp_shots', 0)}<br>
+                            • <b>Tiros a Puerta:</b> Barça {h_match.get('barca_shots_on_target', 0)} | {opponent_name} {h_match.get('opp_shots_on_target', 0)}<br>
+                            • <b>Grandes Ocasiones:</b> Barça {h_match.get('barca_big_chances', 0)} | {opponent_name} {h_match.get('opp_big_chances', 0)}
                         """, unsafe_allow_html=True)
                     with col_d3:
                         st.markdown(f"""
                             <b>🛡️ Defensa, Faltas y Disciplina:</b><br>
-                            • <b>Faltas Cometidas:</b> {h_match.get('barca_fouls', 0)} vs {h_match.get('opp_fouls', 0)}<br>
-                            • <b>Tarjetas (A/R):</b> {h_match.get('barca_yellow_cards', 0)}/{h_match.get('barca_red_cards', 0)} vs {h_match.get('opp_yellow_cards', 0)}/{h_match.get('opp_red_cards', 0)}<br>
-                            • <b>Córners:</b> {h_match.get('barca_corners', 0)} vs {h_match.get('opp_corners', 0)}<br>
-                            • <b>Fueras de Juego:</b> {h_match.get('barca_offsides', 0)} vs {h_match.get('opp_offsides', 0)}<br>
-                            • <b>Paradas:</b> {h_match.get('barca_saves', 0)} vs {h_match.get('opp_saves', 0)}
+                            • <b>Faltas Cometidas:</b> Barça {h_match.get('barca_fouls', 0)} | {opponent_name} {h_match.get('opp_fouls', 0)}<br>
+                            • <b>Tarjetas (A/R):</b> Barça {h_match.get('barca_yellow_cards', 0)}/{h_match.get('barca_red_cards', 0)} | {opponent_name} {h_match.get('opp_yellow_cards', 0)}/{h_match.get('opp_red_cards', 0)}<br>
+                            • <b>Córners:</b> Barça {h_match.get('barca_corners', 0)} | {opponent_name} {h_match.get('opp_corners', 0)}<br>
+                            • <b>Fueras de Juego:</b> Barça {h_match.get('barca_offsides', 0)} | {opponent_name} {h_match.get('opp_offsides', 0)}<br>
+                            • <b>Paradas:</b> Barça {h_match.get('barca_saves', 0)} | {opponent_name} {h_match.get('opp_saves', 0)}
                         """, unsafe_allow_html=True)
 
 # =====================================================================

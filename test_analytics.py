@@ -45,16 +45,27 @@ def run_tests():
     assert len(radar_2425['categories']) == 8
     print(f"[OK] Radar metrics calculated for 2024-25: {radar_2425['raw_stats']}")
 
-    # Test Charts
+    # Test Charts & Home/Away Dynamic Alignment
     fig1 = create_multi_season_points_chart(prog)
     fig2 = create_momentum_chart(prog)
     fig3 = create_xg_differential_chart(prog)
     fig4 = create_radar_comparison_chart([("2024-25", COLOR_BARCA_BLUE, radar_2425)])
     
-    match_sample = df[df['status'] == 'FINISHED'].iloc[0]
-    fig5 = create_match_comparison_bars(match_sample)
+    # Test Home match
+    home_sample = df[(df['status'] == 'FINISHED') & (df['is_barca_home'] == True)].iloc[0]
+    fig_home = create_match_comparison_bars(home_sample)
+    assert fig_home.data[0].name == "FC Barcelona (Local)"
+    assert "Visitante" in fig_home.data[1].name
+    
+    # Test Away match (PSG vs Barça)
+    away_sample = df[(df['status'] == 'FINISHED') & (df['is_barca_home'] == False) & (df['opponent'].str.contains('Paris'))].iloc[0]
+    fig_away = create_match_comparison_bars(away_sample)
+    assert fig_away.data[0].name == "Paris Saint-Germain (Local)"
+    assert fig_away.data[1].name == "FC Barcelona (Visitante)"
+    assert "Paris Saint-Germain vs FC Barcelona" in fig_away.layout.title.text
 
-    assert fig1 and fig2 and fig3 and fig4 and fig5
+    assert fig1 and fig2 and fig3 and fig4 and fig_home and fig_away
+    print("[OK] Home and Away match comparison charts verified with proper alignment!")
     print("[OK] All Plotly figures generated successfully without errors!")
     print("\nALL UNIT TESTS PASSED SUCCESSFULLY!")
 
