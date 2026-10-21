@@ -758,8 +758,19 @@ MATCHES_2026_2027 = [
         "is_barca_home": False,
         "opponent": "Paris Saint-Germain",
         "venue": "Parc des Princes",
-        "status": "SCHEDULED",
-        "notes": "Fase de Liga UCL - Jornada 3 vs PSG en París"
+        "referee": "Michael Oliver",
+        "status": "FINISHED",
+        "barca_score": 2,
+        "opp_score": 4,
+        "notes": "Primera derrota de la temporada (4-2) en el Parque de los Príncipes. Goles de Xavi Espart (55') y Lamine Yamal (79'); Désiré Doué (38'), Lucas Hernández (72'), Vitinha (81') y Fabián Ruiz (86') para el PSG.",
+        "stats": {
+            "barca_xg": 2.19, "opp_xg": 3.73, "barca_possession": 51.0, "opp_possession": 49.0,
+            "barca_shots": 14, "opp_shots": 22, "barca_shots_on_target": 6, "opp_shots_on_target": 14,
+            "barca_corners": 5, "opp_corners": 7, "barca_fouls": 11, "opp_fouls": 13,
+            "barca_yellow_cards": 2, "opp_yellow_cards": 2, "barca_red_cards": 0, "opp_red_cards": 0,
+            "barca_offsides": 4, "opp_offsides": 3, "barca_pass_acc": 89.0, "opp_pass_acc": 88.0,
+            "barca_saves": 10, "opp_saves": 4, "barca_big_chances": 3, "opp_big_chances": 6
+        }
     },
     {
         "id": "2627_UCL_J04",
